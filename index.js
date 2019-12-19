@@ -15,11 +15,11 @@ class AllResultsCsvReporter {
   }
 
   onRunComplete(contexts, results) {
-    let result4csv = ['"suite","case","result"\n']
+    let result4csv = ['"file_path","case","result,message"\n']
     const suites = results.testResults
     for (const suite of suites) {
       for (const testCase of suite.testResults) {
-        result4csv.push(`"${suite.testFilePath}","${testCase.title}","${testCase.status}"\n`)
+        result4csv.push(`"${suite.testFilePath}","${testCase.title}","${testCase.status},${testCase.failureMessage}"\n`)
       }
     }
     fs.writeFile(`${this._options.outputDir}/${this._options.outputFile}`, result4csv.join(''), err => {
